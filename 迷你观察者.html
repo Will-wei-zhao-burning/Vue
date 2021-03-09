@@ -4,7 +4,7 @@
  * @Author: BurNing
  * @Date: 2021-03-09 17:20:04
  * @LastEditors: BurNing
- * @LastEditTime: 2021-03-09 17:42:15
+ * @LastEditTime: 2021-03-09 18:45:27
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -44,8 +44,13 @@
                   return oldValue;
                 },
                 set(newValue){
-                    dep.notify();
-                    oldValue = newValue;
+                    if(oldValue == newValue){
+                        return
+                    }
+                    else{
+                        dep.notify();
+                        oldValue = newValue;
+                    }
                 }
             }) 
         })
