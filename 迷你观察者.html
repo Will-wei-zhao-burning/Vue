@@ -1,0 +1,63 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-09 17:20:04
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-09 17:42:15
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let activeUpdate = null;
+
+    class Dep {
+        constructor(){
+            this.subscribers = new Set();
+        }
+        depend(){
+            if(activeUpdate){
+                //作为订阅者注册现在的更新
+                this.subscribers.add(activeUpdate);
+            }
+        }
+        notify(){
+            //通知所有订阅者发生了改变
+            this.subscribers.map(sub=>sub());
+        }
+    }
+    function observe(obj){
+        Object.keys(obj).map(key=>{
+            let oldValue = obj[key];
+            const dep = new Dep()
+            Object.defineProperty(obj,key,{
+                get(){
+                  dep.depend();
+                  return oldValue;
+                },
+                set(newValue){
+                    dep.notify();
+                    oldValue = newValue;
+                }
+            }) 
+        })
+    }
+    //收集更新，改变时相关依赖并派发更新
+    function autorun(update){
+        const wrapperUpdate = () =>{
+            activeUpdate = wrapperUpdate;
+            update();
+            activeUpdate = null;
+        }
+        wrapperUpdate();
+    }
+</script>
+</html>
