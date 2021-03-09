@@ -1,0 +1,47 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-09 16:24:36
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-09 17:11:45
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    window.Dep = class Dep{
+        constructor(){
+            this.subscribers = new Set();
+        }
+        depend(){
+            if(activeUpdate){
+                //作为订阅者注册现在的更新
+                this.subscribers.add(activeUpdate);
+            }
+        }
+        notify(){
+            //通知所有订阅者发生了改变
+            this.subscribers.map(sub=>sub());
+        }
+    }
+
+    let activeUpdate;
+
+    function autorun(update){
+        function wrapperUpdate(){
+            activeUpdate = wrapperUpdate
+            update();
+            activeUpdate = null;
+        }
+    }
+</script>
+</html>
