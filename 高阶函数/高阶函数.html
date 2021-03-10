@@ -1,0 +1,64 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-10 16:46:44
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-10 17:14:38
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <smart-avatar username="vuejs"></smart-avatar>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    function fetchURL (username , cb){
+        setTimeout(()=>{
+            cb('https://avatars3.githubusercontent.com/u/6128107?v=4&s=200')
+        },500)
+    }
+    const Avatar = {
+        props:['src'],
+        template:`<img :src="src">`
+    }
+    const SmartAvatar = withAvatarURL(Avatar)
+    //高阶函数：模拟执行网络请求，再将请求数据传到Avatar组件中
+    function withAvatarURL(InnerComponent){
+        return {
+            props:['username'],
+            data(){
+                return {
+                    url:null
+                }
+            },
+            created(){
+                fetchURL(this.username,url=>{this.url = url})
+            },
+            render(h){
+                return h(InnerComponent,{props:{
+                    src:this.url|| 'http://via.placeholder.com/200x200'
+                }})
+            }
+        }
+    }
+    
+    Vue.component('SmartAvatar',{
+        render:h=>h(SmartAvatar)
+    })
+
+    new Vue({
+        el:'#app',
+        /* components:{
+            SmartAvatar
+        } */
+    })
+</script>
+</html>
