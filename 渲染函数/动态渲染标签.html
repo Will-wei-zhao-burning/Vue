@@ -1,0 +1,35 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-09 20:39:43
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-09 21:01:37
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <example :tags="['h1','h2','h3']"></example>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('example',{
+        props:['tags'],
+        render:function(h){
+            const children = this.tags.map((item,index)=>{
+                return h(item,index)
+            })
+            return h('div',{},children)
+        }
+    })
+
+    new Vue ({el:'#app'})
+</script>
+</html>
