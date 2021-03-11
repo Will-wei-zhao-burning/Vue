@@ -1,0 +1,34 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-11 15:22:56
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-11 17:02:37
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+<script>
+  //选要babel 
+    new Vue({
+        el:"#app",
+        data:{
+            speed:[{title:'11',render:(h,param)=>{
+                return h('div',{},title);
+            }}]
+        }
+    })
+</script>
+</html>

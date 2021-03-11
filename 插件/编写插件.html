@@ -4,32 +4,50 @@
  * @Author: BurNing
  * @Date: 2021-03-09 18:53:21
  * @LastEditors: BurNing
- * @LastEditTime: 2021-03-09 19:44:19
+ * @LastEditTime: 2021-03-11 17:21:37
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-    //Vue.use()执行 install（vue）方法 
+    /* Vue.use()执行 install（vue）方法 
+        实现全局校验 $watch(第一个参数为string||function 
+        string  将顶层的 data、prop 或 computed property 名作为字符串传递
+        function 复杂的基于运算后的)
+    */
+
     const RulesPlugin = {
-        install(Vue){
+        install(Vue) {
+            //1.添加全局方法
+            Vue.myGlobalMethod = function () {
+                // 逻辑...
+            }
+            //2. 添加全局资源
+            Vue.directive('my-directive', {
+                bind(el, binding, vnode, oldVnode) {
+                    // 逻辑...
+                }
+            })
+            //3. 注入组件选项
             Vue.mixin({
-                created(){
-                    if(this.$options.rules){
-                        Object.keys(this.$options.rules).forEach(key=>{
-                            const {validate,message} = this.$options.rules[key];
+                created() {
+                    if (this.$options.rules) {
+                        Object.keys(this.$options.rules).forEach(key => {
+                            const { validate, message } = this.$options.rules[key];
                             console.log(key);
-                            this.$watch(key,(newValue)=>{
+                            this.$watch(key, (newValue) => {
                                 const isValidated = validate(newValue);
-                                if(!isValidated){
+                                if (!isValidated) {
                                     console.log(message)
                                 }
                             })
@@ -37,18 +55,24 @@
                     }
                 }
             })
+
+            // 4. 添加实例方法
+            Vue.prototype.$myMethod = function (methodOptions) {
+                // 逻辑...
+            }
         }
     }
     Vue.use(RulesPlugin);
 
-    const vm =new Vue({
-      data:{foo:10},
-      rules:{
-          foo:{
-              validate: value =>value>1,
-              message:'foo must be bigger than one'
-          }
-      }
+    const vm = new Vue({
+        data: { foo: 10 },
+        rules: {
+            foo: {
+                validate: value => value > 1,
+                message: 'foo must be bigger than one'
+            }
+        }
     })
 </script>
+
 </html>
