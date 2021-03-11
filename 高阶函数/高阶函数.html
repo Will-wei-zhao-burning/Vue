@@ -4,7 +4,7 @@
  * @Author: BurNing
  * @Date: 2021-03-10 16:46:44
  * @LastEditors: BurNing
- * @LastEditTime: 2021-03-10 17:14:38
+ * @LastEditTime: 2021-03-10 17:22:09
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,9 @@
 </head>
 <body>
     <div id="app">
-        <smart-avatar username="vuejs"></smart-avatar>
+        <smart-avatar username="vuejs">
+            <div slot="foo"></div>
+        </smart-avatar>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -43,6 +45,7 @@
                 fetchURL(this.username,url=>{this.url = url})
             },
             render(h){
+                console.log(this.$slots.foo,this.$slots.default)
                 return h(InnerComponent,{props:{
                     src:this.url|| 'http://via.placeholder.com/200x200'
                 }})
