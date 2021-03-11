@@ -1,0 +1,54 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-11 12:02:08
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-11 14:26:36
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <example :other="price" @input="btnclick"></example>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //v-model的实现
+    Vue.component('example',{
+        props:['other'],
+       
+        render:function(h){
+            var self =this;
+            console.log(self.other);
+            return h('input',{
+                domProps:{
+                    value:self.other
+                },
+                on:{
+                    input:e=>{
+                        console.log(e)
+                        this.$emit('input', e.target.value)
+                    }
+                }
+            })
+        }
+    })
+    new Vue ({el:'#app',
+              methods:{
+            btnclick(val){
+                this.price = val;
+                console.log(val)
+            }
+        },
+        data:{
+        price:"123"
+    }})
+</script>
+</html>

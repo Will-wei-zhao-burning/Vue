@@ -4,7 +4,7 @@
  * @Author: BurNing
  * @Date: 2021-03-11 10:30:15
  * @LastEditors: BurNing
- * @LastEditTime: 2021-03-11 11:44:59
+ * @LastEditTime: 2021-03-11 12:00:39
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,8 @@
       },
       //this需要使用函数，不能是箭头函数
       render:function(h){
-        return h('h'+this.size,'hee')
+        console.log(this);
+        return h('h'+this.size,this.$slots.default)
       }
   })
   new Vue({el:'#app'})
