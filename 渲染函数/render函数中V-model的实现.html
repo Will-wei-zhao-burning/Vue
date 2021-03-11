@@ -4,7 +4,7 @@
  * @Author: BurNing
  * @Date: 2021-03-11 12:02:08
  * @LastEditors: BurNing
- * @LastEditTime: 2021-03-11 14:26:36
+ * @LastEditTime: 2021-03-11 15:13:30
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -15,12 +15,12 @@
 </head>
 <body>
     <div id="app">
-        <example :other="price" @input="btnclick"></example>
+        <example :value="price" @input="btnclick"></example>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-    //v-model的实现
+<!-- <script>
+    //v-model的实现-方式一 通过render实现
     Vue.component('example',{
         props:['other'],
        
@@ -50,5 +50,26 @@
         data:{
         price:"123"
     }})
+</script> -->
+<script>
+    //v-model实现-方式二 通过template实现
+    Vue.component('example',{
+        props:['value'],
+        render:function(h){
+            console.log(this)
+        },
+        template:`<input :value="value" @input="$emit('input',$event.target.value)"></input>`
+    })
+    new Vue ({el:'#app',
+              methods:{
+            btnclick(val){
+                this.price = val;
+                console.log(val)
+            }
+        },
+        data:{
+        price:"123"
+    }})
 </script>
+
 </html>
