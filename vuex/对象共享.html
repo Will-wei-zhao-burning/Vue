@@ -1,0 +1,57 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-12 16:38:35
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-12 17:08:01
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <counter ></counter>
+        <counter ></counter>
+        <counter ></counter>
+        <button @click="inc">+1</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+   const store = new Vue({
+       //state
+       data:{
+           counter:0
+       },
+       //mutation
+       methods:{
+           inc(){
+               this.counter++;
+           }
+       }
+   })
+
+    const state = {
+        counter:0
+    }
+
+    const Counter = {
+        render:(h)=>{
+           return h('div',state.counter)
+        }
+    }
+    new Vue({
+        el:'#app',
+        components:{Counter},
+        methods:{
+        inc(){
+            state.counter = state.counter+1;
+        }
+    }})
+</script>
+</html>

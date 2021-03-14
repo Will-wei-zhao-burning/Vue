@@ -1,0 +1,62 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-12 17:08:22
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-12 17:22:07
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <counter></counter>
+        <button @click="inc">+1</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 简单的Vuex实现：state和mutation -->
+<script>
+    function createStore({state,mutations}){
+        return new Vue({
+            data:{
+                state
+            },
+            methods:{
+                commit(types){
+                    mutations[types](this.state)
+                }
+            }
+        })
+    }
+
+    const store = createStore({
+        state:{count:0},mutations:{
+            inc(state){
+                state.count++;
+            }
+        }
+    })
+
+    const Counter = {
+        render(h){
+            return h('div',store.state.count)
+        }
+    }
+
+    new Vue({
+        el:'#app',
+        components:{Counter},
+        methods:{
+            inc(){
+                store.commit('inc')
+            }
+        }
+    })
+</script>
+</html>

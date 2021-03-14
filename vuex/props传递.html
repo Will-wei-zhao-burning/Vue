@@ -1,0 +1,40 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: BurNing
+ * @Date: 2021-03-12 16:32:27
+ * @LastEditors: BurNing
+ * @LastEditTime: 2021-03-12 16:38:05
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <counter :counter="counter"></counter>
+        <counter :counter="counter"></counter>
+        <counter :counter="counter"></counter>
+        <button @click="counter++">+1</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    /* 最基本的状态管理 通过props传递*/
+    new Vue({
+        el:'#app',
+        data:{
+            counter:0
+        },
+        components:{
+            Counter:{
+                props:['counter'],
+                template:`<div>{{counter}}</div>`
+            }
+        }
+    })
+</script>
+</html>
